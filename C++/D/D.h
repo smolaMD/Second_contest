@@ -22,30 +22,6 @@ class Matrix {
 public:
   T matrix[Rows][Cols];
 
-  Matrix() = default;
-
-  Matrix(std::initializer_list<std::initializer_list<T>> init) {
-    size_t i = 0;
-    for (const auto &row : init) {
-      size_t j = 0;
-      for (const auto &value : row) {
-        matrix[i][j] = value;
-        ++j;
-      }
-      ++i;
-    }
-  }
-
-  Matrix(std::initializer_list<T> init) {
-    size_t k = 0;
-    for (size_t i = 0; i < Rows; ++i) {
-      for (size_t j = 0; j < Cols; ++j) {
-        matrix[i][j] = *(init.begin() + k);
-        ++k;
-      }
-    }
-  }
-
   size_t RowsNumber() const {
     return Rows;
   }
