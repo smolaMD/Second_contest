@@ -3,15 +3,9 @@
 
 #include <iostream>
 
-template <int T, int L, int M> struct Quantity {
+template <int T, int L, int M>
+struct Quantity {
   double value = 0;
-  Quantity() = default;
-  Quantity(double value) : value(value) {} // NOLINT
-
-  Quantity<T, L, M> &operator=(const Quantity<T, L, M> &other) {
-    value = other.value;
-    return *this;
-  }
 
   Quantity<T, L, M> &operator+=(const Quantity<T, L, M> &other) {
     *this = *this + other;
@@ -23,12 +17,14 @@ template <int T, int L, int M> struct Quantity {
     return *this;
   }
 
-  template <class Scalar> Quantity<T, L, M> &operator*=(const Scalar &scalar) {
+  template <class Scalar>
+  Quantity<T, L, M> &operator*=(const Scalar &scalar) {
     this->value *= scalar;
     return *this;
   }
 
-  template <class Scalar> Quantity<T, L, M> &operator/=(const Scalar &scalar) {
+  template <class Scalar>
+  Quantity<T, L, M> &operator/=(const Scalar &scalar) {
     this->value /= scalar;
     return *this;
   }
@@ -36,54 +32,52 @@ template <int T, int L, int M> struct Quantity {
 
 template <int T, int L, int M>
 Quantity<T, L, M> operator+(const Quantity<T, L, M> &param1, const Quantity<T, L, M> &param2) {
-  return Quantity<T, L, M>(param1.value + param2.value);
+  return {param1.value + param2.value};
 }
 
 template <int T, int L, int M>
 Quantity<T, L, M> operator-(const Quantity<T, L, M> &param1, const Quantity<T, L, M> &param2) {
-  return Quantity<T, L, M>(param1.value - param2.value);
+  return {param1.value - param2.value};
 }
 
 template <int T, int L, int M>
 Quantity<T, L, M> operator+(const Quantity<T, L, M> &param) {
-  return Quantity<T, L, M>(param.value);
+  return {param.value};
 }
 
 template <int T, int L, int M>
 Quantity<T, L, M> operator-(const Quantity<T, L, M> &param) {
-  return Quantity<T, L, M>(-param.value);
+  return {-param.value};
 }
 
 template <int T1, int L1, int M1, int T2, int L2, int M2>
-Quantity<T1 + T2, L1 + L2, M1 + M2>
-operator*(const Quantity<T1, L1, M1> &param1, const Quantity<T2, L2, M2> &param2) {
-  return Quantity<T1 + T2, L1 + L2, M1 + M2>(param1.value * param2.value);
+Quantity<T1 + T2, L1 + L2, M1 + M2> operator*(const Quantity<T1, L1, M1> &param1, const Quantity<T2, L2, M2> &param2) {
+  return {param1.value * param2.value};
 }
 
 template <int T1, int L1, int M1, int T2, int L2, int M2>
-Quantity<T1 - T2, L1 - L2, M1 - M2>
-operator/(const Quantity<T1, L1, M1> &param1, const Quantity<T2, L2, M2> &param2) {
-  return Quantity<T1 - T2, L1 - L2, M1 - M2>(param1.value / param2.value);
+Quantity<T1 - T2, L1 - L2, M1 - M2> operator/(const Quantity<T1, L1, M1> &param1, const Quantity<T2, L2, M2> &param2) {
+  return {param1.value / param2.value};
 }
 
 template <int T, int L, int M, class Scalar>
 Quantity<T, L, M> operator*(const Scalar &scalar, const Quantity<T, L, M> &param) {
-  return Quantity<T, L, M>(scalar * param.value);
+  return {scalar * param.value};
 }
 
 template <int T, int L, int M, class Scalar>
 Quantity<T, L, M> operator*(const Quantity<T, L, M> &param, const Scalar &scalar) {
-  return Quantity<T, L, M>(param.value * scalar);
+  return {param.value * scalar};
 }
 
 template <int T, int L, int M, class Scalar>
 Quantity<T, L, M> operator/(const Quantity<T, L, M> &param, const Scalar &scalar) {
-  return Quantity<T, L, M>(param.value / scalar);
+  return {param.value / scalar};
 }
 
 template <int T, int L, int M, class Scalar>
 Quantity<-T, -L, -M> operator/(const Scalar &scalar, const Quantity<T, L, M> &param) {
-  return Quantity<-T, -L, -M>(scalar / param.value);
+  return {scalar / param.value};
 }
 
 template <int T, int L, int M>
@@ -125,31 +119,31 @@ using Force = Quantity<-2, 1, 1>;
 using Energy = Quantity<-2, 2, 1>;
 
 inline Time operator""_s(long double value) {
-  return {Time(static_cast<double>(value))};
+  return {static_cast<double>(value)};
 }
 
 inline Length operator""_m(long double value) {
-  return {Length(static_cast<double>(value))};
+  return {static_cast<double>(value)};
 }
 
 inline Mass operator""_kg(long double value) {
-  return {Mass(static_cast<double>(value))};
+  return {static_cast<double>(value)};
 }
 
 inline Speed operator""_mps(long double value) {
-  return {Speed(static_cast<double>(value))};
+  return {static_cast<double>(value)};
 }
 
 inline Acceleration operator""_mps2(long double value) {
-  return {Acceleration(static_cast<double>(value))};
+  return {static_cast<double>(value)};
 }
 
 inline Force operator""_N(long double value) {
-  return {Force(static_cast<double>(value))};
+  return {static_cast<double>(value)};
 }
 
 inline Energy operator""_J(long double value) {
-  return {Energy(static_cast<double>(value))};
+  return {static_cast<double>(value)};
 }
 
 #endif
